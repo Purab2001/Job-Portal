@@ -24,9 +24,9 @@ const Error = () => {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="min-h-screen pt-20 bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center px-4"
+            className="min-h-screen pt-20 bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center"
         >
-            <div className="container mx-auto max-w-4xl">
+            <div className="container mx-auto max-w-7xl px-6">
                 <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl overflow-hidden">
                     <div className="flex flex-col lg:flex-row items-center">
                         {/* Animation Section */}

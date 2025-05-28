@@ -58,6 +58,7 @@ const Navbar = () => {
     { to: "/", text: "Home" },
     { to: "/findJobs", text: "Find Jobs" },
     ...(user ? [{ to: "/myApplications", text: "My Applications" }] : []),
+    ...(user ? [{ to: "/addJob", text: "Add Job" }] : []),
     { to: "/about", text: "About" },
     { to: "/contact", text: "Contact" },
   ];
@@ -90,7 +91,7 @@ const Navbar = () => {
           : 'bg-white/90 backdrop-blur-sm py-3'
       }`}
     >
-      <div className="container mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <motion.div 
@@ -111,7 +112,7 @@ const Navbar = () => {
               ))}
             </ul>
 
-            <div className="ml-4 flex items-center space-x-3">
+            <div className="ml-8 flex items-center space-x-3">
               {user ? (
                 <>
                   <motion.div 
@@ -122,7 +123,7 @@ const Navbar = () => {
                   >
                     <button 
                       onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                      className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors"
+                      className="flex items-center space-x-2 py-2 text-gray-700 hover:text-blue-600 transition-colors"
                     >
                       <FiUser className="text-lg" />
                       <span>My Profile</span>

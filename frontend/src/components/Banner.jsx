@@ -1,6 +1,7 @@
 import React from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
+import BannerImage from '../assets/that-s-how-success-looks-like-photo-young-team-classical-clothes-celebrating-success-while-holding-drinks-modern-good-lighted-office.jpg'; // Adjust the path as necessary
 
 const Banner = () => {
   const containerVariants = {
@@ -27,7 +28,7 @@ const Banner = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center">
-      <div className="container mx-auto px-6 py-16 md:py-24 lg:py-32">
+      <div className="max-w-7xl mx-auto px-6 py-16 md:py-24 lg:py-32">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
           {/* Text Content */}
           <motion.div 
@@ -118,7 +119,7 @@ const Banner = () => {
           >
             <div className="relative">
               <img 
-                src="https://img.freepik.com/free-vector/hand-drawn-recruiting-illustration_23-2149092636.jpg" 
+                src={BannerImage}
                 alt="Job Search" 
                 className="rounded-2xl shadow-2xl w-full h-auto max-w-2xl mx-auto"
               />

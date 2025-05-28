@@ -125,12 +125,12 @@ const MyApplications = () => {
     };
 
     return (
-        <div className="bg-gray-50 min-h-screen py-20 px-4 sm:px-6 lg:px-8">
+        <div className="bg-gray-50 min-h-screen py-20">
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="max-w-7xl mx-auto">
+                className="max-w-7xl mx-auto px-6">
 
                 <div className="text-center mb-10">
                     <motion.h1

@@ -77,7 +77,7 @@ const Register = () => {
       exit="out"
       variants={pageVariants}
       transition={{ duration: 0.5 }}
-      className="min-h-screen pt-18 flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 p-4"
+      className="min-h-screen pt-20 flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 p-6"
     >
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row-reverse w-full lg:w-4/5 xl:w-3/4 mx-auto bg-white/10 backdrop-blur-lg shadow-2xl rounded-xl overflow-hidden">
