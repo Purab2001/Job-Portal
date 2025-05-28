@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import useAuth from '../../hooks/useAuth';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+// eslint-disable-next-line no-unused-vars
+import { motion } from 'framer-motion';
 
 const initialState = {
     title: '',
@@ -20,6 +24,30 @@ const initialState = {
     hr_email: '',
     hr_name: '',
     company_logo: ''
+};
+
+const formVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.6,
+            ease: "easeOut",
+        },
+    },
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: (i) => ({
+        opacity: 1,
+        y: 0,
+        transition: {
+            delay: i * 0.1,
+            duration: 0.5,
+        },
+    }),
 };
 
 const AddJobs = () => {
@@ -65,20 +93,50 @@ const AddJobs = () => {
                 max: Number(formData.salaryRange.max),
             },
         };
+        data.status = 'active';
 
         console.log('Job Data:', data);
+
+        axios.post('https://job-portal-umber-chi.vercel.app/jobs', data)
+            .then(response => {
+                console.log('Job added successfully:', response.data);
+                setFormData(initialState);
+                setRequirementsInput('');
+                setResponsibilitiesInput('');
+                toast.success('Job added successfully!');
+            })
+            .catch(error => {
+                console.error('Error adding job:', error);
+                toast.error('Failed to add job. Please try again.');
+            });
     };
 
     return (
         <div className="bg-gray-50 pb-20 pt-30">
+            <Toaster position="top-right" />
             <div className="max-w-7xl mx-auto px-6">
-                <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-100">
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8"
+                >
+                    <motion.h2
+                        className="text-3xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-100"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                    >
                         Add New Job
-                    </h2>
-                    <form onSubmit={handleAddJob} className="space-y-6">
+                    </motion.h2>
+                    <motion.form
+                        variants={formVariants}
+                        initial="hidden"
+                        animate="visible"
+                        onSubmit={handleAddJob}
+                        className="space-y-6"
+                    >
                         {/* Job Title */}
-                        <div>
+                        <motion.div variants={itemVariants} custom={0}>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Job Title <span className="text-red-500">*</span></label>
                             <input
                                 type="text"
@@ -89,9 +147,9 @@ const AddJobs = () => {
                                 required
                                 placeholder="e.g. Software Engineer"
                             />
-                        </div>
+                        </motion.div>
                         {/* Location */}
-                        <div>
+                        <motion.div variants={itemVariants} custom={1}>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Location <span className="text-red-500">*</span></label>
                             <input
                                 type="text"
@@ -102,9 +160,9 @@ const AddJobs = () => {
                                 required
                                 placeholder="e.g. Dhaka"
                             />
-                        </div>
+                        </motion.div>
                         {/* Job Type & Category */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <motion.div variants={itemVariants} custom={2} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Job Type</label>
                                 <select
@@ -132,9 +190,9 @@ const AddJobs = () => {
                                     <option value="Finance">Finance</option>
                                 </select>
                             </div>
-                        </div>
+                        </motion.div>
                         {/* Application Deadline */}
-                        <div>
+                        <motion.div variants={itemVariants} custom={3}>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Application Deadline <span className="text-red-500">*</span></label>
                             <input
                                 type="date"
@@ -144,9 +202,9 @@ const AddJobs = () => {
                                 className="block w-full pl-3 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 required
                             />
-                        </div>
+                        </motion.div>
                         {/* Salary Range */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <motion.div variants={itemVariants} custom={4} className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Min Salary <span className="text-red-500">*</span></label>
                                 <input
@@ -183,9 +241,9 @@ const AddJobs = () => {
                                     <option value="usd">USD</option>
                                 </select>
                             </div>
-                        </div>
+                        </motion.div>
                         {/* Description */}
-                        <div>
+                        <motion.div variants={itemVariants} custom={5}>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Description <span className="text-red-500">*</span></label>
                             <textarea
                                 name="description"
@@ -196,9 +254,9 @@ const AddJobs = () => {
                                 required
                                 placeholder="Describe the job role, expectations, etc."
                             />
-                        </div>
+                        </motion.div>
                         {/* Company Name */}
-                        <div>
+                        <motion.div variants={itemVariants} custom={6}>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Company Name <span className="text-red-500">*</span></label>
                             <input
                                 type="text"
@@ -209,9 +267,9 @@ const AddJobs = () => {
                                 required
                                 placeholder="e.g. Google"
                             />
-                        </div>
+                        </motion.div>
                         {/* Requirements */}
-                        <div>
+                        <motion.div variants={itemVariants} custom={7}>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Requirements <span className="text-red-500">*</span></label>
                             <input
                                 type="text"
@@ -222,9 +280,9 @@ const AddJobs = () => {
                                 required
                             />
                             <p className="text-xs text-gray-500 mt-1">Separate requirements with commas.</p>
-                        </div>
+                        </motion.div>
                         {/* Responsibilities */}
-                        <div>
+                        <motion.div variants={itemVariants} custom={8}>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Responsibilities <span className="text-red-500">*</span></label>
                             <input
                                 type="text"
@@ -235,9 +293,9 @@ const AddJobs = () => {
                                 required
                             />
                             <p className="text-xs text-gray-500 mt-1">Separate responsibilities with commas.</p>
-                        </div>
+                        </motion.div>
                         {/* HR Email */}
-                        <div>
+                        <motion.div variants={itemVariants} custom={9}>
                             <label className="block text-sm font-medium text-gray-700 mb-1">HR Email <span className="text-red-500">*</span></label>
                             <input
                                 type="email"
@@ -248,9 +306,9 @@ const AddJobs = () => {
                                 required
                                 placeholder="hr@example.com"
                             />
-                        </div>
+                        </motion.div>
                         {/* HR Name */}
-                        <div>
+                        <motion.div variants={itemVariants} custom={10}>
                             <label className="block text-sm font-medium text-gray-700 mb-1">HR Name <span className="text-red-500">*</span></label>
                             <input
                                 type="text"
@@ -261,9 +319,9 @@ const AddJobs = () => {
                                 required
                                 placeholder="e.g. Jane Doe"
                             />
-                        </div>
+                        </motion.div>
                         {/* Company Logo URL */}
-                        <div>
+                        <motion.div variants={itemVariants} custom={11}>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Company Logo URL</label>
                             <input
                                 type="url"
@@ -273,9 +331,9 @@ const AddJobs = () => {
                                 className="block w-full pl-3 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 placeholder="https://logo-url.com"
                             />
-                        </div>
+                        </motion.div>
                         {/* Status */}
-                        <div>
+                        <motion.div variants={itemVariants} custom={12}>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
                             <select
                                 name="status"
@@ -286,18 +344,20 @@ const AddJobs = () => {
                                 <option value="active">Active</option>
                                 <option value="inactive">Inactive</option>
                             </select>
-                        </div>
+                        </motion.div>
                         {/* Submit Button */}
-                        <div className="pt-4">
-                            <button
+                        <motion.div variants={itemVariants} custom={13} className="pt-4">
+                            <motion.button
                                 type="submit"
-                                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+                                whileHover={{ scale: 1.04 }}
+                                whileTap={{ scale: 0.97 }}
+                                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors cursor-pointer"
                             >
                                 Submit
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                            </motion.button>
+                        </motion.div>
+                    </motion.form>
+                </motion.div>
             </div>
         </div>
     );

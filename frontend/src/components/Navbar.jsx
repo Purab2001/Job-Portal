@@ -59,6 +59,7 @@ const Navbar = () => {
     { to: "/findJobs", text: "Find Jobs" },
     ...(user ? [{ to: "/myApplications", text: "My Applications" }] : []),
     ...(user ? [{ to: "/addJob", text: "Add Job" }] : []),
+    ...(user ? [{ to: "/myPostedJobs", text: "My Posted Jobs" }] : []),
     { to: "/about", text: "About" },
     { to: "/contact", text: "Contact" },
   ];
