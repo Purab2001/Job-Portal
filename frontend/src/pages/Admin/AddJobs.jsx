@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
@@ -56,6 +56,16 @@ const AddJobs = () => {
     const [formData, setFormData] = useState(initialState);
     const [requirementsInput, setRequirementsInput] = useState('');
     const [responsibilitiesInput, setResponsibilitiesInput] = useState('');
+
+    // Set hr_email from user.email if not already set
+    useEffect(() => {
+        if (user?.email && !formData.hr_email) {
+            setFormData(prev => ({
+                ...prev,
+                hr_email: user.email
+            }));
+        }
+    }, [user?.email, formData.hr_email]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -300,7 +310,7 @@ const AddJobs = () => {
                             <input
                                 type="email"
                                 name="hr_email"
-                                defaultValue={user.email}
+                                value={formData.hr_email}
                                 onChange={handleChange}
                                 className="block w-full pl-3 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                 required

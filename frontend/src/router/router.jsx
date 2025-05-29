@@ -11,6 +11,7 @@ import FindJobs from "../pages/FindJobs";
 import MyApplications from "../pages/MyApplications";
 import AddJobs from "../pages/Admin/AddJobs";
 import MyPostedJobs from "../pages/Admin/MyPostedJobs";
+import ViewApplications from "../pages/Admin/ViewApplications";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,13 @@ const router = createBrowserRouter([
         element: <PrivateRoutes>
           <MyPostedJobs />
         </PrivateRoutes>,
+      },
+      {
+        path: "/applications/:jobId",
+        element: <PrivateRoutes>
+          <ViewApplications />
+        </PrivateRoutes>,
+        loader: ({params}) => fetch(`https://job-portal-umber-chi.vercel.app/applications/job/${params.jobId}`),
       },
       {
         path: "/findJobs",

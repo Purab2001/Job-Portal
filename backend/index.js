@@ -66,10 +66,29 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/applications/job/:job_id", async (req, res) => {
+      const job_id = req.params.job_id;
+      const query = { jobId: job_id };
+      const result = await applications.find(query).toArray();
+      res.send(result);
+    });
+
     app.get("/applications", async (req, res) => {
       const email = req.query.email;
       const query = { email: email };
       const result = await applications.find(query).toArray();
+      res.send(result);
+    });
+
+    app.patch("/applications/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(req.params.id) };
+      const updatedDoc = {
+        $set: {
+          status: req.body.status,
+        }
+      }
+      const result = await applications.updateOne(filter, updatedDoc);
       res.send(result);
     });
 
