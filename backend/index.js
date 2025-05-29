@@ -30,10 +30,22 @@ async function run() {
     const applications = db.collection("applications");
 
     app.get("/jobs", async (req, res) => {
-      const cursor = collection.find({});
+      const email = req.query.email;
+      const query = {}
+      if (email) {
+        query.hr_email = email;
+      }
+      const cursor = collection.find(query);
       const jobs = await cursor.toArray();
       res.send(jobs);
     });
+
+    // app.get('/jobsByHR', async (req, res) => {
+    //   const email = req.query.email;
+    //   const query = { hr_email: email };
+    //   const result = await collection.find(query).toArray();
+    //   res.send(result);
+    // });
 
     app.get("/jobs/:id", async (req, res) => {
       const jobId = req.params.id;
